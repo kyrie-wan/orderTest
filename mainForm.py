@@ -15,9 +15,9 @@ WIN_WIDTH = 1066
 WIN_HEIGHT = 500
 THREAD_NUM = 10
 
-TIMESLOT = [u'10:00 上午 - 11:00 上午',u'11:00 上午 - 12:00 下午',u'12:00 下午 - 1:00 下午',u'1:00 下午 - 2:00 下午',u'2:00 下午 - 3:00 下午', u'3:00 下午 - 4:00 下午',u'4:00 下午 - 5:00 下午',u'5:00 下午 - 6:00 下午',u'6:00 下午 - 7:00 下午',u'7:00 下午 - 8:00 下午']
-PRODUCTNAME =[u'金色64GB',u'金色32GB',u'金色16GB']
-STORENAME =['Causeway Bay','ifc mall','Festival Walk']
+TIME_SLOT = [u'10:00 上午 - 11:00 上午',u'11:00 上午 - 12:00 下午',u'12:00 下午 - 1:00 下午',u'1:00 下午 - 2:00 下午',u'2:00 下午 - 3:00 下午', u'3:00 下午 - 4:00 下午',u'4:00 下午 - 5:00 下午',u'5:00 下午 - 6:00 下午',u'6:00 下午 - 7:00 下午',u'7:00 下午 - 8:00 下午']
+PRODUCT_NAME =[u'金色64GB',u'金色32GB',u'金色16GB']
+STORE_NAME =['ifc mall','Causeway Bay','Festival Walk']
 
 
 
@@ -145,13 +145,13 @@ class MainWindow(QtGui.QMainWindow):
             item = QtGui.QLineEdit()
             self.tableWidget.setCellWidget(row,c,item)
         combox5 = QtGui.QComboBox()
-        combox5.addItems(TIMESLOT)
+        combox5.addItems(TIME_SLOT)
         self.tableWidget.setCellWidget(row,5,combox5)
         combox6 = QtGui.QComboBox()
-        combox6.addItems(PRODUCTNAME)
+        combox6.addItems(PRODUCT_NAME)
         self.tableWidget.setCellWidget(row,6,combox6)
         combox7 = QtGui.QComboBox()
-        combox7.addItems(STORENAME)
+        combox7.addItems(STORE_NAME)
         self.tableWidget.setCellWidget(row,7,combox7)
         self.tableWidget.setCurrentCell(row,0)
 
