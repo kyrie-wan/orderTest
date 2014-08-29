@@ -7,17 +7,17 @@ import Queue
 from PyQt4 import QtCore, QtGui
 
 import workthread
-import order
+from order import orderInfo
 from myexception import HttpLibError
 from dialog import LoginDialog
 
-WIN_WIDTH = 1366
-WIN_HEIGHT = 700
+WIN_WIDTH = 1066 
+WIN_HEIGHT = 500
 THREAD_NUM = 10
 
 TIMESLOT = [u'10:00 上午 - 11:00 上午',u'11:00 上午 - 12:00 下午',u'12:00 下午 - 1:00 下午',u'1:00 下午 - 2:00 下午',u'2:00 下午 - 3:00 下午', u'3:00 下午 - 4:00 下午',u'4:00 下午 - 5:00 下午',u'5:00 下午 - 6:00 下午',u'6:00 下午 - 7:00 下午',u'7:00 下午 - 8:00 下午']
 PRODUCTNAME =[u'金色64GB',u'金色32GB',u'金色16GB']
-STORENAME =[u'西单',u'王府井',u'三里屯']
+STORENAME =['Causeway Bay','ifc mall','Festival Walk']
 
 
 
@@ -36,8 +36,8 @@ class MainWindow(QtGui.QMainWindow):
     count_trigger =  QtCore.pyqtSignal(int,name = 'updateLCDNumber')
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
-        self.setWindowTitle('HelloIphone')
-        self.font =QtGui.QFont("Times", 10, QtGui.QFont.Bold)
+        self.setWindowTitle('Kyrie\'s test No.1')
+        self.font = QtGui.QFont("Times", 10, QtGui.QFont.Bold)
         self.setMinimumSize(WIN_WIDTH, WIN_HEIGHT)
         self.verticalLayoutWidget = QtGui.QWidget()
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(0, 0, WIN_WIDTH, WIN_HEIGHT))
@@ -49,8 +49,8 @@ class MainWindow(QtGui.QMainWindow):
 
         self.hBoxForTip = QtGui.QHBoxLayout()
         self.verticalLayout.addLayout(self.hBoxForTip)
-        self.label = QtGui.QLabel(u'成功个数')
-        self.label.setMaximumSize(50,50)
+        self.label = QtGui.QLabel('Sucess :')
+        self.label.setMaximumSize(150,50)
         self.hBoxForTip.addWidget(self.label)
         self.labelNumber = QtGui.QLabel('0')
         self.labelNumber.setMaximumSize(50,50)
@@ -64,43 +64,43 @@ class MainWindow(QtGui.QMainWindow):
         self.tableWidget.setColumnCount(8)
 
         item = QtGui.QTableWidgetItem()
-        item.setText(u'姓')
+        item.setText('Surname')
         self.tableWidget.setHorizontalHeaderItem(0, item)
-        self.tableWidget.setColumnWidth(0,100)
+        self.tableWidget.setColumnWidth(0,50)
 
         item = QtGui.QTableWidgetItem()
-        item.setText(u'名')
+        item.setText('Lastname')
         self.tableWidget.setHorizontalHeaderItem(1, item)
-        self.tableWidget.setColumnWidth(1,100)
+        self.tableWidget.setColumnWidth(1,50)
 
         item = QtGui.QTableWidgetItem()
-        item.setText(u'手机')
+        item.setText('Mobile No.')
         self.tableWidget.setHorizontalHeaderItem(2, item)
-        self.tableWidget.setColumnWidth(2,150 )
+        self.tableWidget.setColumnWidth(2,50 )
 
         item = QtGui.QTableWidgetItem()
-        item.setText(u'邮箱')
+        item.setText('Email Adress')
         self.tableWidget.setHorizontalHeaderItem(3, item)
         self.tableWidget.setColumnWidth(3,200)
 
 
         item = QtGui.QTableWidgetItem()
-        item.setText(u'身份证号')
+        item.setText('HKID no.')
         self.tableWidget.setHorizontalHeaderItem(4, item)
-        self.tableWidget.setColumnWidth(4, 200)
+        self.tableWidget.setColumnWidth(4, 50)
 
         item = QtGui.QTableWidgetItem()
-        item.setText(u'取货时间')
+        item.setText('Pickup TimeSlot')
         self.tableWidget.setHorizontalHeaderItem(5, item)
         self.tableWidget.setColumnWidth(5, 200)
 
         item = QtGui.QTableWidgetItem()
-        item.setText(u'型号')
+        item.setText('Model Type')
         self.tableWidget.setHorizontalHeaderItem(6, item)
         self.tableWidget.setColumnWidth(6,150 )
 
         item = QtGui.QTableWidgetItem()
-        item.setText(u'店址')
+        item.setText('Shop Adress')
         self.tableWidget.setHorizontalHeaderItem(7, item)
         self.tableWidget.setColumnWidth(7,150 )
         self.tableWidget.horizontalHeader().setStretchLastSection(True)
@@ -109,7 +109,7 @@ class MainWindow(QtGui.QMainWindow):
         #---------------------------below code create start widget
         self.hBoxForAction = QtGui.QHBoxLayout()
         self.verticalLayout.addLayout(self.hBoxForAction)
-        self.btnStart = QtGui.QPushButton(u'开始')
+        self.btnStart = QtGui.QPushButton('Start')
         self.btnStart.setMaximumSize(100,100)
         self.hBoxForAction.addWidget(self.btnStart)
         self.connect(self.btnStart, QtCore.SIGNAL('clicked()'), self.Start)
@@ -119,13 +119,13 @@ class MainWindow(QtGui.QMainWindow):
         self.hBoxForAction.addWidget(self.processWin)
         #---------------------------below code create add , delete widget
         self.vBoxForAddDel = QtGui.QVBoxLayout()
-        self.btnAddUser = QtGui.QPushButton(u'添加')
-        self.btnAddUser.setMaximumSize(50,50)
+        self.btnAddUser = QtGui.QPushButton('Add Order')
+        self.btnAddUser.setMaximumSize(100,50)
         self.connect(self.btnAddUser, QtCore.SIGNAL('clicked()'), self.insertRecord)
         self.vBoxForAddDel.addWidget(self.btnAddUser)
 
-        self.btnDeleteUser = QtGui.QPushButton(u'删除')
-        self.btnDeleteUser.setMaximumSize(50,50)
+        self.btnDeleteUser = QtGui.QPushButton('Delete Order')
+        self.btnDeleteUser.setMaximumSize(100,50)
         self.connect(self.btnDeleteUser, QtCore.SIGNAL('clicked()'), self.removeRecord)
         self.vBoxForAddDel.addWidget(self.btnDeleteUser)
 
@@ -162,12 +162,12 @@ class MainWindow(QtGui.QMainWindow):
         self.tableWidget.removeRow(curRow)
 
 
-    # collect user info
+    # collect user info ->max row :10, column :8
     def collectData(self):
         rn = self.tableWidget.rowCount()
         cn = self.tableWidget.columnCount()
         for row in range(rn):
-            info = order.orderInfo()
+            info = orderInfo()
             info.rowNumber = row
             item = self.tableWidget.cellWidget(row, 0)
             info.lastName =unicode(item.text())
@@ -215,7 +215,7 @@ class MainWindow(QtGui.QMainWindow):
         self.collectData()
         try:
             for index in range(2):
-                out_queue = Queue.Queue()
+                out_queue = Queue.Queue() #for
                 t1 = workthread.worker(self.queue,out_queue,index,self.proc_trigger,self.dialog_trigger,self.count_trigger)
                 self.thread_list.append(t1)
                 self.queue_list.append(out_queue)
