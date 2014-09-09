@@ -1,3 +1,4 @@
+#exclude intellij info
 .idea/
 *.py[cod]
 

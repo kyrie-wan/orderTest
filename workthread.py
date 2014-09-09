@@ -17,13 +17,15 @@ from data import *
 from myexception import *
 
 
-Store = [ 'R388', 'R448', 'R320'] # xd,wfj,slt
+Store = [ 'R388', 'R448', 'R320']  # xd,wfj,slt
 
-Product = ['ME458CH/A','ME455CH/A','ME452CH/A']
+Product = ['ME458CH/A', 'ME455CH/A', 'ME452CH/A']
 
 CaptchaUrl = 'https://ireservea.apple.com/captchas/file.jpeg?%d'
-orderUrl = 'https://ireservea.apple.com/CN/zh_CN/reserve/iPhone'
-ReservationUrl = 'https://ireservea.apple.com/CN/zh_CN/reserve/iPhone/productReservation'
+orderUrl_HK = 'https://ireservea.apple.com/HK/zh_HK/reserve/iPhone'
+ReservationUrl_CN = 'https://ireservea.apple.com/CN/zh_CN/reserve/iPhone/productReservation'
+ReservationUrl_HK = 'https://ireservea.apple.com/HK/zh_HK/reserve/iPhone/productReservation'
+
 SkusForProductUrl = 'https://ireservea.apple.com/CN/zh_CN/reserve/iPhone/skusForStoreProduct'
 GetTimeSlotsUrl = 'https://ireservea.apple.com/CN/zh_CN/reserve/iPhone/getTimeSlots'
 CreatePickUpUrl = 'https://ireservea.apple.com/CN/zh_CN/reserve/iPhone/createPickUp'
@@ -33,7 +35,12 @@ error_url = 'https://ireservea.apple.com/CN/zh_CN/reserve/iPhone/reservationInac
 mutex = QtCore.QMutex()
 
 class worker(QtCore.QThread):
-
+#id ? what's the id stands for?
+#p_trigger : update process main window
+#d_trigger : ?
+#c_trigger : ?
+#user_queue:
+#code_queue: ?out_queue?  enter out_queue?
     def __init__(self,user_queue,out_queue,id,p_trigger,d_trigger,c_trigger):
         QtCore.QThread.__init__(self,)
         self.queue = user_queue
@@ -47,9 +54,9 @@ class worker(QtCore.QThread):
         self.hasStop = False
         self.network = net()
         self.id = id
-        self.p_trigger =p_trigger
-        self.d_trigger =d_trigger
-        self.c_trigger =c_trigger
+        self.p_trigger = p_trigger
+        self.d_trigger = d_trigger
+        self.c_trigger = c_trigger
 
     def __del__(self):
         self.wait()

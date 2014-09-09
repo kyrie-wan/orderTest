@@ -33,7 +33,9 @@ class net:
 
     def getContent(self):
         return self.resp.content
-
+    #An application client must receive and send two cookies: the application-generated cookie
+    # and the special Elastic Load Balancing cookie named AWSELB.
+    #  This is the default behavior for many common web browsers.
     def updateCookie(self):
         try:
             self._cookie['JSESSIONID'] = self.resp.cookies['JSESSIONID']
